@@ -15,9 +15,59 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::with(['books','badges'])->paginate(5);
+        $authors = Author::with([
+            'books'=> function ($query)
+            {
+                $query->orderByDesc('avg_rating');
+                
+            },
+            'badges'
+        ])->paginate(5);
         
-        return view('book.show', ['authors'=>$authors]);
+        return view('book.index', ['authors'=>$authors]);
+    }
+
+    public function search(Request $request)
+    {    
+        // if($request->has('q'))
+        if(1)
+        {
+            $search = $request->q;
+            $authors = Author::
+                // orWhere('name', 'LIKE', "%{$search}%")
+                // ->orWhere('email', 'LIKE', "%{$search}%")
+                with([
+                'books'=> function ($query) use($search)
+                {
+                    $query->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('isbn', 'LIKE', "%{$search}%");
+                },
+                'badges'
+            ])->paginate(5);
+        
+            // dd($authors);
+            
+            return view('book.show', ['authors'=>$authors]);
+        }
+        else
+        {
+            // dd($authors);
+            // return $this->index();
+        }
+    }
+
+    public static function getBooksName($books)
+    {         
+        $booksName = array();
+        
+        foreach($books as $book)
+        {
+            $booksName[] = $book->name;
+        }                                  
+        
+        $results=implode(', ',$booksName);
+
+        return $results;
     }
     
 }

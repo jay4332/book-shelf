@@ -10,13 +10,6 @@ class Book extends Model
     use HasFactory;
 
     public $timestamps = false;
-    
-    /**
-    * The relationships that should always be loaded.
-    *
-    * @var array
-    */
-    protected $with = ['authors'];
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +28,22 @@ class Book extends Model
      */
     public function authors()
     {
-        return $this->belongsTo(Author::class,'author_id');
+        return $this->belongsTo(Author::class,'author_id')->withDefault([
+            'name' => 'No Books Found'
+        ]);
+    }
+
+    public static function getBooksName($books)
+    {         
+        $booksName = array();
+        
+        foreach($books as $book)
+        {
+            $booksName[] = $book->name;
+        }                                  
+        
+        $results=implode(', ',$booksName);
+
+        return $results;
     }
 }

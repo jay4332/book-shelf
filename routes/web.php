@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [BookController::class, 'index']);
-Route::get('/show', [AuthorController::class, 'index']);
+Route::get('/', [AuthorController::class, 'index']);
+Route::get('/search', [AuthorController::class, 'search']);

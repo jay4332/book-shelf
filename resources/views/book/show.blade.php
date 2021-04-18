@@ -27,10 +27,10 @@
 
         <nav class="navbar navbar-light bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand text-white">Author - Book</a>
-                <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <a href="/" class="navbar-brand text-white">Author - Book</a>
+                <form class="d-flex" action="/search">
+                    <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </nav>
@@ -42,48 +42,52 @@
                 <table>
                     <tr>
                         <td><h3>|</h3></td>
-                        <td><h3>Author</h3></td>
+                        <td align="center"><h3>Author</h3></td>
                         <td><h3>|</h3></td>
-                        <td><h3>Books Count</h3></td>
+                        <td align="center"><h3>Books Count</h3></td>
                         <td><h3>|</h3></td>
-                        <td><h3>Books List</h3></td>
+                        <td align="center"><h3>Books List</h3></td>
                         <td><h3>|</h3></td>
                     </tr>
-
+                    <tr>
+                        <td colspan="7"><hr></td>
+                    </tr>
                     @foreach($authors as $author)
-                    <tr>
-                        <td>|</td>
-                        <td><h5>{{ $author->name }}</h5></td>
-                        <td>|</td>
-                        <td></td>
-                        <td>|</td>
-                        <td><h5><a ></a></h5></td>
-                        <td>|</td>
-                    </tr>
+                        <tr>
+                            <td>|</td>
+                            <td><h5>{{ $author->name }}</h5></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                            @foreach($author->books as $book)
+                                <td><h5><a>{{ $book->name }}</a></h5></td>
+                            @endforeach
+                            <td>|</td>
+                        </tr>
 
-                     <tr>
-                        <td>|</td>
-                        <td><h5><a >{{ $author->email }}</a></h5></td>
-                        <td>|</td>
-                        <td>|</td>
-                        <td><h5><a >{{ $author->id }}</a></h5></td>
-                        <td>|</td>
-                    </tr>
-                    
-                    <!-- <tr>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
-                    </tr>
-                    <tr>
-                        <td>|</td>
-                        <td><h5><a >]</a></h5></td>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
-                    </tr> -->
-                    
+                        <tr>
+                            <td>|</td>
+                            <td><h5><a >{{ $author->email }}</a></h5></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                        </tr>
+                        <tr>
+                            <td>|</td>                            
+                            @foreach($author->badges as $badge)
+                                <td><h5><a>{{ $badge->label }}</a></h5></td>
+                            @endforeach
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                        </tr>                              
+                        <tr>
+                            <td colspan="7"><br></td>
+                        </tr>              
                     @endforeach                    
                     
 

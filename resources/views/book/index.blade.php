@@ -28,9 +28,9 @@
         <nav class="navbar navbar-light bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand text-white">Author - Book</a>
-                <form class="d-flex" action="{{ url('/') }}">
-                    <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </nav>
@@ -42,59 +42,65 @@
                 <table>
                     <tr>
                         <td><h3>|</h3></td>
-                        <td><h3>Author</h3></td>
+                        <td align="center"><h3>Author</h3></td>
                         <td><h3>|</h3></td>
-                        <td><h3>Books Count</h3></td>
+                        <td align="center"><h3>Books Count</h3></td>
                         <td><h3>|</h3></td>
-                        <td><h3>Books List</h3></td>
+                        <td align="center"><h3>Books List</h3></td>
                         <td><h3>|</h3></td>
-                    </tr>
-
-                    @foreach($authors as $book)
-                    <tr>
-                        <td>|</td>
-                        <td><h5>{{ $book->authors->name }}</h5></td>
-                        <td>|</td>
-                        <td></td>
-                        <td>|</td>
-                        <td><h5><a >{{ $book->name }}</a></h5></td>
-                        <td>|</td>
-                    </tr>
-
-                     <tr>
-                        <td>|</td>
-                        <td><h5><a >{{ $book->authors->email }}</a></h5></td>
-                        <td>|</td>
-                        <td>|</td>
-                        <td><h5><a >{{ $book->author_id }}</a></h5></td>
-                        <td>|</td>
-                    </tr>
-                    
-                    @endforeach
-
-                    
-                    <!--<tr>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
                     </tr>
                     <tr>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
-                        <td>|</td>
-                    </tr> -->
-                    
+                        <td colspan="7"><hr></td>
+                    </tr>
+                    @foreach($authors as $author)
+                        <tr>
+                            <td>|</td>
+                            <td><h5>{{ $author->name }}</h5></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+
+                            @inject('AuthorController', 'App\Http\Controllers\AuthorController')
+
+                            <td><h5><a>{{ $AuthorController::getBooksName($author->books) }}</a></h5></td>                
+                            <td>|</td>
+                        </tr>
+
+                        <tr>
+                            <td>|</td>
+                            <td><h5><a >{{ $author->email }}</a></h5></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                        </tr>
+                        <tr>
+                            <td>|</td>
+                            <td><h5>                            
+                                @foreach($author->badges as $badge)
+                                    {{ $badge->label }}
+                                @endforeach
+                            </h5></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                            <td></td>
+                            <td>|</td>
+                        </tr>                              
+                        <tr>
+                            <td colspan="7"><br></td>
+                        </tr>              
+                    @endforeach                    
                     
 
                 </table>
 
                 <nav aria-label="...">
                     <ul class="pagination justify-content-center">
-                        {{ $authors->links() }}
+                    {{ $authors->links() }}
                     </ul>
-                    </nav>
+                </nav>
             </div>
         </main>
             
